@@ -73,8 +73,12 @@ popup.querySelectorAll("input").forEach(input => input.required = true);
 
 
 function removeBook(id) {
-  myLibrary = myLibrary.filter(book => book.id !== id);
+   const index = myLibrary.findIndex(book => book.id === id);
 
+  // If found, remove it from the array
+  if (index !== -1) {
+    myLibrary.splice(index, 1);
+  }
 }
 
 addmore.addEventListener("click", ()=>{
@@ -121,6 +125,23 @@ console.log(myLibrary)
 function displayBook(book){
     const unit = document.createElement("div")
     unit.classList.add("unit")
+    const divup=document.createElement("div")
+    divup.id="remove"
+    const removebtn=document.createElement("i")
+    removebtn.classList.add("fa-solid", "fa-trash")
+    divup.addEventListener("click", () => {
+  removeBook(book.id);
+  unit.remove();
+});
+divup.appendChild(removebtn)
+unit.appendChild(divup)
+divup.addEventListener("mouseenter", () => {
+  removebtn.classList.add("animate-hover");
+});
+
+removebtn.addEventListener("animationend", () => {
+  removebtn.classList.remove("animate-hover");
+});
     function createline(a, b){
      const p = document.createElement("p");
      const first =document.createElement("span")
